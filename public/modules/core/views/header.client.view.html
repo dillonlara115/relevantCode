@@ -1,0 +1,66 @@
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title"><a href="/#!/" class="navbar-brand">relevantcode</a></span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <nav class="mdl-navigation mdl-layout--large-screen-only"  role="navigation">
+        <a class="mdl-navigation__link" href="">Resources</a>
+        <a class="mdl-navigation__link" href="">Themes</a>
+        <a class="mdl-navigation__link" href="">Tutorials</a>
+        <a class="mdl-navigation__link" href="">Contact</a>
+        <div data-ng-show="authentication.user">
+        	<button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+			   <i class="material-icons">more_vert</i>
+			</button>
+			<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+			    for="demo-menu-lower-right">
+			    <li class="mdl-menu__item"><span data-ng-bind="authentication.user.displayName"></span></li>
+				<li class="mdl-menu__item"><a href="/#!/settings/profile" class="mdl-navigation__link">Edit Profile</a></li>
+				<li class="mdl-menu__item"><a href="/#!/settings/accounts" class="mdl-navigation__link">Manage Social Accounts</a></li>
+				<li class="mdl-menu__item" data-ng-show="authentication.user.provider === 'local'"><a href="/#!/settings/password" class="mdl-navigation__link">Change Password</a></li>
+				<li class="mdl-menu__item"><a href="/auth/signout" class="mdl-navigation__link">Signout</a></li>
+			</ul>
+		</div>
+        <div data-ng-if="menu.shodivdRender(authentication.user);">
+			<div data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shodivdRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}} mdl_navigation__link" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
+				<a ng-switch-when="dropdown" class="mdl-navigation__link">
+					<span data-ng-bind="item.title"></span>
+					<b class="caret"></b>
+				</a>
+				<div ng-switch-when="dropdown" class="dropdown-menu">
+					<div data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shodivdRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
+						<a href="/#!/{{subitem.link}}" class="mdl-navigation__link" data-ng-bind="subitem.title"></a>
+					</div>
+				</div>
+				<a ng-switch-defadivt href="/#!/{{item.link}}" class="mdl-navigation__link" data-ng-bind="item.title"></a>
+			</div>
+		</div>
+      </nav>
+    </div>
+    <!-- Bottom row, not visible on scroll -->
+    <div class="mdl-layout__header-row">
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation -->
+      <nav class="mdl-navigation">
+        <div class="mdl-navigation__link" data-ng-hide="authentication.user">
+			<div class="mdl-navigation__link" ui-route="/signup" ng-class="{active: $uiRoute}">
+				<a href="/#!/signup" class="mdl-navigation__link">Sign Up</a>
+			</div>
+			<div class="mdl-navigation__link" ui-route="/signin" ng-class="{active: $uiRoute}" >
+				<a href="/#!/signin" class="mdl-navigation__link">Sign In</a>
+			</div>
+		</div>
+        
+      </nav>
+    </div>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">RelevantCode</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="">Resources</a>
+      <a class="mdl-navigation__link" href="">Themes</a>
+      <a class="mdl-navigation__link" href="">Tutorials</a>
+      <a class="mdl-navigation__link" href="">Contact</a>
+    </nav>
+  </div>
+
